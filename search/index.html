@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Light Novel</title>
+
+  <!-- Font Awesome (ikon) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/search.css"
+</head>
+
+<body>
+
+  <!-- Header Search -->
+  <div class="search-header">
+    <i class="fas fa-arrow-left back-btn" onclick="history.back()"></i>
+
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Cari Light Novel..."
+        autocomplete="off"
+      >
+    </div>
+  </div>
+  
+  <div class="filter-container" id="filterBar">
+            <div class="chip active" onclick="filter('All', this)">Semua</div>
+            </div>
+  
+   <div class="grid-container" id="gridContainer"></div>
+
+   <div class="grid-container" id="searchResult"></div>
+
+  <div class="hint"></div>
+
+  
+
+  <!-- Script eksternal -->
+  <script src="../js/search.js"></script>
+
+</body>
+</html>

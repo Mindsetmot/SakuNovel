@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Archivo+Black&family=Creepster&family=Lobster&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Expanded+One&family=Zen+Tokyo+Zoo&display=swap" rel="stylesheet">
+  <link rel="icon" href="../../image/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div id="toast"></div>
+
+<main>
+<!-- LOGIN -->
+<div id="login" class="page active">
+
+<div class="login-container">
+        <div class="header">
+            <h2>GERBANG ARSIP</h2>
+        </div>         
+
+        <form id="loginForm">
+
+            <label>Email / Username</label>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="email" placeholder="Masukkan identitas pembaca" required>
+            </div>
+            
+            <label>Password</label>
+            <div class="input-group password-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Masukkan segel akses" required>
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+            
+            <div class="captcha-wrapper">
+            <div class="g-recaptcha" data-sitekey="6Lf_8MIsAAAAAOoihympE8qGEQXIFHf-zb85btbr"></div>
+            </div>
+
+            <button type="submit">Masuki Perpustakaan</button>
+        </form>
+
+        <p>Belum memiliki akses arsip? 
+            <a href="#" data-target="register"><u>Buat Akun</u></a>
+        </p>
+    </div>
+</div>
+
+
+<!-- REGISTER -->
+<div id="register" class="page">
+
+    <div class="register-container">
+        <div class="header">
+            <h2>REGISTRASI PEMBACA</h2>
+        </div>
+
+        <form id="registerForm">
+
+            <label>Username</label>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Masukkan nama pengguna" required>
+            </div>
+
+            <label>Email</label>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Masukkan alamat email" required>
+            </div>
+
+            <label>Password</label>
+            <div class="input-group password-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Buat segel akses" required>
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+            
+            <div class="captcha-wrapper">
+            <div class="g-recaptcha" data-sitekey="6Lf_8MIsAAAAAOoihympE8qGEQXIFHf-zb85btbr"></div>
+            </div>
+
+            <button type="submit">Bangkitkan Akun</button>
+        </form>
+        
+        <p>Sudah memiliki akses? 
+            <a href="#" data-target="login"><u>Kembali Login</u></a>
+        </p>
+    </div>    
+</div>
+
+</main>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

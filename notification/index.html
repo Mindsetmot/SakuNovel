@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Notifikasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../css/notification.css"
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="back-btn" onclick="history.back()"><i data-lucide="arrow-left" size="24"></i></button>
+  <span class="nav-title">Notifikasi</span>
+</nav>
+
+<div class="container">
+  <div class="notif-list" id="notifList"></div>
+</div>
+
+<div class="modal" id="notifModal" onclick="this.style.display='none'">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon-small" id="mIcon"></div>
+      <h2 id="mTitle">Informasi</h2>
+    </div>
+    <div class="modal-body">
+      <p id="mText"></p>
+    </div>
+    <button class="btn-close" onclick="document.getElementById('notifModal').style.display='none'">Oke</button>
+  </div>
+</div>
+
+<script src="../js/notification.js"></script>
+
+</body>
+</html>

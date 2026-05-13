@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Volume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #080f17;
+            --surface: #1b1e2d;
+            --text: #ebebee;
+            --text-dim: #9ca3af;
+            --accent: #9c6cff;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            max-width: 500px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Navigasi & Tab */
+        .header-nav {
+            display: flex; align-items: center;
+            background: var(--bg); position: sticky; top: 0;
+            z-index: 1000; padding: 10px 15px 0 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-btn {
+            background: none; border: none; color: var(--text);
+            font-size: 1.3rem; cursor: pointer; padding: 20px;
+            transition: 0.3s;
+        }
+        
+        .back-btn:active { transform: scale(0.9); opacity: 0.7; }
+
+        .tabs { display: flex; flex: 1; gap: 5px; }
+        .tab-btn { 
+            flex: 1; padding: 15px 0; text-align: center; 
+            font-weight: 700; color: var(--text-dim); cursor: pointer; 
+            border-bottom: 3px solid transparent; font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Container Geser */
+        .tab-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tab-wrapper::-webkit-scrollbar { display: none; }
+
+        .container { padding-bottom: 30px; }
+        
+        .tab-content {
+            flex: 0 0 100%;
+            width: 100%;
+            scroll-snap-align: start;
+            padding-bottom: 50px;
+        }
+
+        /* Info Card */
+        .main-content { display: flex; gap: 20px; padding: 20px; }
+        .hero-container {
+            position: relative;
+            flex-shrink: 0;
+            width: 140px; height: 210px;
+            border-radius: 12px; overflow: hidden;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .hero-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .bookmark {
+            position: absolute; top: 0; right: 0; z-index: 10;
+            background: rgba(0,0,0,0.3); color: #fff;
+            width: 35px; height: 40px; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 18px; border-radius: 0 0 0 12px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .bookmark.active { color: var(--accent); background: rgba(0,0,0,0.6); }
+
+        .info-card { flex: 1; }
+        .info-grid { display: flex; flex-direction: column; gap: 12px; }
+        .info-item { display: grid; grid-template-columns: 50px 20px 1fr; align-items: flex-start; }
+        .info-item label { color: var(--text-dim); font-weight: 600; font-size: 0.85rem; }
+        .info-item .separator { color: var(--accent); font-weight: bold; text-align: center; }
+        .info-item span { font-weight: 600; font-size: 0.9rem; word-break: break-word; line-height: 1.4; }
+
+        /* Sinopsis */
+        .sinopsis { padding: 0 20px; margin-top: 10px; }
+        .sinopsis h3 { font-size: 1rem; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .sinopsis p {
+            font-size: 0.95rem; line-height: 1.8; text-align: justify;
+            background: rgba(27, 30, 45, 0.4); padding: 20px; border-radius: 12px;
+        }
+
+        /* Volume Items */
+        .volume-item {
+            display: flex; align-items: center;
+            background: linear-gradient(145deg, #23273a, #1b1e2d);
+            margin: 15px 20px; padding: 12px; border-radius: 16px;
+            text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s ease;
+        }
+        .volume-item:active { transform: scale(0.96); background: rgba(156, 108, 255, 0.1); }
+        .vol-img { width: 75px; height: 105px; border-radius: 10px; object-fit: cover; margin-right: 18px; }
+        .vol-details h4 { font-size: 1rem; color: var(--text);  margin-right: 10px; margin-bottom: 6px; }
+        .vol-badge {
+            display: inline-block; background: var(--accent); color: #fff;
+            font-size: 10px; font-weight: 800; padding: 3px 10px;
+            border-radius: 6px; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .vol-info-text { font-size: 0.8rem; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
+
+        .vol-info-text i {margin-right: 6px;}
+
+        #loading { text-align: center; padding: 80px 20px; color: var(--accent); font-weight: 600; font-size: 30px;}
+    </style>
+</head>
+<body>
+
+<div class="header-nav">
+    <button class="back-btn" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+    <div class="tabs">
+        <div id="btn-info" class="tab-btn active" onclick="switchTab('info')">RINGKASAN</div>
+        <div id="btn-volumes" class="tab-btn" onclick="switchTab('volumes')">VOLUME</div>
+    </div>
+</div>
+
+<div id="loading">
+    <i class="fas fa-spinner fa-spin"></i><br><br>Memuat data...
+</div>
+
+<div class="container" id="content-area" style="display: none;">
+    <div class="tab-wrapper" id="tab-wrapper">
+        
+        <div id="info" class="tab-content">
+            <div class="main-content">
+                <div class="hero-container">
+                    <img id="data-img" src="" alt="Cover">
+                    <div id="btn-bookmark" class="bookmark" onclick="toggleBookmark()">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-grid">
+                        <div class="info-item"><label>Judul</label><div class="separator">:</div><span id="data-judul">-</span></div>
+                        <div class="info-item"><label>Status</label><div class="separator">:</div><span id="data-status">-</span></div>
+                        <div class="info-item"><label>Rilis</label><div class="separator">:</div><span id="data-rilis">-</span></div>
+                        <div class="info-item"><label>Volume</label><div class="separator">:</div><span id="data-volume">-</span></div>
+                        <div class="info-item"><label>Genre</label><div class="separator">:</div><span id="data-genre">-</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sinopsis">
+                <h3>Sinopsis</h3>
+                <p id="data-sinopsis">-</p>
+            </div>
+        </div>
+
+        <div id="volumes" class="tab-content">
+            <div id="volume-list-container"></div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const seriesKey = params.get('series');
+    const tabWrapper = document.getElementById('tab-wrapper');
+    const API_BASE = "http://127.0.0.1:3000";
+    
+function fixImagePath(src) {
+  if (!src) return `${API_BASE}/assets/no-image.jpg`;
+  if (src.startsWith("http")) return src;
+  if (src.startsWith("/")) return `${API_BASE}${src}`;
+  return `${API_BASE}/assets/${src.replace(/^\/+/, "")}`;
+}
+
+    // Navigasi Tab via Klik
+    function switchTab(tabId) {
+        const target = document.getElementById(tabId);
+        tabWrapper.scrollTo({
+          left: target.getBoundingClientRect().left + tabWrapper.scrollLeft,
+          behavior: 'smooth'
+        });
+    }
+
+    // Sinkronisasi Tab via Geser (Scroll)
+    tabWrapper.addEventListener('scroll', () => {
+        const scrollLeft = tabWrapper.scrollLeft;
+        const width = tabWrapper.offsetWidth;
+        const index = Math.round(scrollLeft / width);
+        
+        const btnInfo = document.getElementById('btn-info');
+        const btnVol = document.getElementById('btn-volumes');
+
+        if (index === 0) {
+            btnInfo.classList.add('active');
+            btnVol.classList.remove('active');
+        } else {
+            btnVol.classList.add('active');
+            btnInfo.classList.remove('active');
+        }
+    });
+
+    async function initPage() {
+        if (!seriesKey) {
+            document.getElementById('loading').innerHTML = "Series tidak ditemukan.";
+            document.getElementById('content-area').style.display = 'none';
+           	document.getElementById('loading').style.display = 'block';
+            return;
+        }
+
+        try {
+            const resMain = await fetch(`${API_BASE}/api/novels`); 
+            const dataList = await resMain.json();
+            const item = dataList.find(d =>
+ 	 typeof d.halaman === "string" &&
+  	d.halaman.includes(`series=${seriesKey}`)
+	);
+            if (item) {
+                renderInfo(item);
+                await loadVolumeDetails();
+                checkBookmarkStatus();
+            } else {
+                document.getElementById('loading').innerHTML = "Data tidak ditemukan.";
+            }
+        } catch (error) {
+            document.getElementById('loading').innerHTML = "Gagal memuat data.";
+        }
+    }
+
+    function renderInfo(item) {
+        document.getElementById('data-img').src = fixImagePath(item.gambar);
+        document.getElementById('data-judul').textContent = item.nama;
+        document.getElementById('data-status').textContent = item.status;
+        document.getElementById('data-rilis').textContent = item.tanggal;
+        document.getElementById('data-volume').textContent = item.volume;
+        document.getElementById('data-genre').textContent = Array.isArray(item.genre)
+          ? item.genre.join(', ')
+          : (item.genre || '-');
+        (document.getElementById('data-sinopsis').innerHTML =  (item.sinopsis || "").replace(/\n/g, '<br><br>'));
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content-area').style.display = 'block';
+        document.title = item.nama;
+    }
+
+    async function loadVolumeDetails() {
+        const container = document.getElementById('volume-list-container');
+        try {
+            const response = await fetch(`${API_BASE}/api/novels/${seriesKey}`);
+            if (!response.ok) throw new Error();
+            const data = await response.json();
+
+            if (data.volumes) {
+                container.innerHTML = data.volumes.map(vol => `
+                    <a href="${vol.link}" class="volume-item">
+                        <img src="${fixImagePath(vol.image)}" class="vol-img" onerror="this.src='http://127.0.0.1:3000/assets/no-cover.jpg'">
+                        <div class="vol-details">
+                            <span class="vol-badge">${vol.status || 'Ongoing'}</span>
+                            <h4>Vol. ${vol.volNum} - ${vol.title}</h4>
+                            <div class="vol-info-text">
+                                <span><i class="far fa-file-alt"></i> ${vol.chapterCount} Chapters</span>
+                                <span>•</span>
+                                <span><i class="far fa-calendar-alt"></i> ${vol.releaseDate}</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="margin-left:auto; margin-right:20px; opacity:0.4; color: white;"></i>
+                    </a>
+                `).join('');
+            }
+        } catch (err) {
+            container.innerHTML = "<p style='text-align:center; padding:50px; opacity:0.5;'>Volume belum tersedia.</p>";
+        }
+    }
+
+    function toggleBookmark() {
+        let bookmarks = [];
+        try {
+          bookmarks = JSON.parse(localStorage.getItem('myBookmarks')) || [];
+        } catch {
+          bookmarks = [];
+        }
+        const btn = document.getElementById('btn-bookmark');
+        const index = bookmarks.indexOf(seriesKey);
+        if (index === -1) { bookmarks.push(seriesKey); btn.classList.add('active'); } 
+        else { bookmarks.splice(index, 1); btn.classList.remove('active'); }
+        localStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+    }
+
+    function checkBookmarkStatus() {
+        let bookmarks = JSON.parse(localStorage.getItem('myBookmarks')) || [];
+        if (bookmarks.includes(seriesKey)) document.getElementById('btn-bookmark').classList.add('active');
+    }
+
+    window.onload = initPage;
+</script>
+</body>
+</html>
