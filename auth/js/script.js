@@ -54,11 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return JSON.parse(text);
     })
         .then(res => {
+            console.log(res);
             if(res.status === 'success') {
                 showToast(res.message, "success");
                 if(actionType === 'login') {
                     localStorage.setItem('user_name', res.data.username);
                     localStorage.setItem('account_id', res.data.account_id);
+                    localStorage.setItem('user_role', res.data.role);
                     // Redirect ke halaman utama
                     setTimeout(() => { window.location.href = '../index.html'; }, 1500);
                 } else {

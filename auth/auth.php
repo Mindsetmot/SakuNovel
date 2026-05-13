@@ -256,7 +256,8 @@ elseif ($action == 'login') {
             "message" => "Selamat Datang, " . $user_data['username'] . "!",
             "data" => [
                 "username"   => $user_data['username'],
-                "account_id" => $user_data['account_id']
+                "account_id" => $user_data['account_id'],
+                "role" => $user_data['role']
             ]
         ]);
 

@@ -3,7 +3,12 @@ let lastPageId = "beranda";
   
 const API_BASE = "http://127.0.0.1:3000";  
   
-    fetch(`${API_BASE}/api/novels`)  
+    fetch(`${API_BASE}/api/novels`, {
+			    credentials: 'include',
+			    headers: {
+			        "x-user-role": localStorage.getItem("user_role")
+			    }
+			})
             .then(res => res.json())  
             .then(data => {  
                 novelDB = data;  
@@ -339,7 +344,12 @@ function closeNotifModal() {
 window.onclick = e => { if (e.target == modalEl) closeNotifModal(); };  
   
 document.addEventListener("DOMContentLoaded", () => {  
-  fetch(`${API_BASE}/api/novels`)  
+  fetch(`${API_BASE}/api/novels`, {
+    credentials: 'include',
+    headers: {
+        "x-user-role": localStorage.getItem("user_role")
+    }
+})
     .then(res => res.json())  
     .then(data => {  
       renderGrid(data);  
