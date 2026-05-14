@@ -276,7 +276,7 @@ async function loadVolumeDetails() {
             if (data.volumes) {
                 container.innerHTML = data.volumes.map(vol => `
                     <a href="${vol.link}" class="volume-item">
-                        <img src="${fixImagePath(vol.image)}" class="vol-img" onerror="this.src='https://core-logic.floverse.my.id/assets/no-cover.jpg'">
+                        <img src="${fixImagePath(vol.image)}" class="vol-img" onerror="this.src='/assets/no-cover.jpg'">
                         <div class="vol-details">
                             <span class="vol-badge">${vol.status || 'Ongoing'}</span>
                             <h4>Vol. ${vol.volNum} - ${vol.title}</h4>
