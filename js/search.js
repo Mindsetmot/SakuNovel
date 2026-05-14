@@ -42,7 +42,9 @@ function fixImageUrl(path) {
 // LOAD DATABASE
 // ======================================
 document.addEventListener("DOMContentLoaded", () => {
-  fetch(`${API_BASE}/api/novels`)
+  fetch(`${API_BASE}/api/novels`, {
+        credentials: 'include'
+    })
     .then(res => res.json())
     .then(data => {
       novelDB = data;

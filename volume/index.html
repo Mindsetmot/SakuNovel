@@ -185,11 +185,11 @@
     const params = new URLSearchParams(window.location.search);
     const seriesKey = params.get('series');
     const tabWrapper = document.getElementById('tab-wrapper');
-    const API_BASE = "http://127.0.0.1:3000";
+    const API_BASE = "https://core-logic.floverse.my.id";
     
 function fixImagePath(src) {
   if (!src) return `${API_BASE}/assets/no-image.jpg`;
-  if (src.startsWith("http")) return src;
+  if (src.startsWith("https")) return src;
   if (src.startsWith("/")) return `${API_BASE}${src}`;
   return `${API_BASE}/assets/${src.replace(/^\/+/, "")}`;
 }
@@ -263,17 +263,20 @@ function fixImagePath(src) {
         document.title = item.nama;
     }
 
-    async function loadVolumeDetails() {
-        const container = document.getElementById('volume-list-container');
-        try {
-            const response = await fetch(`${API_BASE}/api/novels/${seriesKey}`);
-            if (!response.ok) throw new Error();
-            const data = await response.json();
+async function loadVolumeDetails() {
+    const container = document.getElementById('volume-list-container');
+    try {
+        const response = await fetch(`${API_BASE}/api/novels/${seriesKey}`, {
+            credentials: 'include'
+        });
+        
+        if (!response.ok) throw new Error();
+        const data = await response.json();
 
             if (data.volumes) {
                 container.innerHTML = data.volumes.map(vol => `
                     <a href="${vol.link}" class="volume-item">
-                        <img src="${fixImagePath(vol.image)}" class="vol-img" onerror="this.src='http://127.0.0.1:3000/assets/no-cover.jpg'">
+                        <img src="${fixImagePath(vol.image)}" class="vol-img" onerror="this.src='https://core-logic.floverse.my.id/assets/no-cover.jpg'">
                         <div class="vol-details">
                             <span class="vol-badge">${vol.status || 'Ongoing'}</span>
                             <h4>Vol. ${vol.volNum} - ${vol.title}</h4>

@@ -28,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. LOAD DATA SLIDE
     const slider = document.querySelector(".slide-card");
     if (slider) {
-        fetch(`${API_BASE}/api/slide`)
+        fetch(`${API_BASE}/api/slide`, {
+            credentials: 'include'
+        })
             .then(res => res.json())
             .then(data => {
                 renderSlideCard(data, slider);
@@ -168,7 +170,9 @@ function initNotificationSystem() {
     const notifBadge = document.getElementById("notifBadge");
     const listEl = document.getElementById('notifList');
 
-    fetch(`${API_BASE}/api/notification`)
+    fetch(`${API_BASE}/api/notification`, {
+        credentials: 'include'
+    })
     .then(res => res.json())
     .then(data => {
         // Update Badge

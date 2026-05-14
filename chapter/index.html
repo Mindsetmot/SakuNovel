@@ -385,15 +385,14 @@ const params = new URLSearchParams(location.search);
 
 const seriesKey = params.get("series");
 const volumeKey = params.get("volume");
-const API_BASE = "http://127.0.0.1:3000";  
+const API_BASE = "https://core-logic.floverse.my.id";  
 
 
 async function loadChapterPage(){
-
-  try{
-
-    const res =
-    await fetch(`${API_BASE}/api/novels/${seriesKey}`);
+  try {
+    const res = await fetch(`${API_BASE}/api/novels/${seriesKey}`, {
+        credentials: 'include'
+    });
 
     const data = await res.json();
 
