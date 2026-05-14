@@ -1,6 +1,6 @@
 let novelDB = [];
 
-const API_BASE = "http://127.0.0.1:3000";
+const API_BASE = "https://core-logic.floverse.my.id";
 
 // ======================================
 // ELEMENT
@@ -14,14 +14,11 @@ const gridContainer = document.getElementById("gridContainer");
 // ======================================
 function fixHalamanLink(link) {
   if (!link) return "#";
-
-  // kalau absolute url
-  if (link.startsWith("http")) {
+  
+  if (link.startsWith("https")) {
     return link;
   }
-
-  // kalau dari backend misalnya:
-  // /volume/index.html?series=roshidere
+  
   return ".." + link;
 }
 

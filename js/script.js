@@ -1,7 +1,7 @@
 /* ==============================  
    KONFIGURASI & STATE UTAMA
 ============================== */
-const API_BASE = "http://127.0.0.1:3000";
+const API_BASE = "https://core-logic.floverse.my.id";
 let novelDB = [];
 let lastPageId = "beranda";
 let allNotifications = [];

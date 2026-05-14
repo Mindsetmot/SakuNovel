@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = Object.fromEntries(formData.entries());
         
         const actionType = (formId === 'loginForm') ? 'login' : 'register';
-        const endpoint = `http://localhost:3000/api/${actionType}`;
+        const endpoint = `https://core-logic.floverse.my.id/api/${actionType}`;
     
         fetch(endpoint, {   
             method: 'POST',   
