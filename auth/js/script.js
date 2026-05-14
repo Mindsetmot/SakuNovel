@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('account_id', res.data.account_id);
                     localStorage.setItem('user_role', res.data.role);
                     // Redirect ke halaman utama
-                    setTimeout(() => { window.location.href = '../index.html'; }, 1500);
+                    setTimeout(() => { window.location.href = '../'; }, 1500);
                 } else {
                     setTimeout(() => { switchPage('login'); }, 1500);
                 }
