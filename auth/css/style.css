@@ -7,8 +7,8 @@
     --accent-dark: #6d47c7;
 
     --gold: #f7c65c;
-    --green: #6ee7b7;
-    --red: #ff5c7a;
+    --green: #00ff88; 
+    --red: #ff4d4d;
 
     --text-main: #f1f5f9;
     --text-dim: #94a3b8;
@@ -298,20 +298,16 @@ button:hover {
     top: 30px;
 }
 
-.toast-success {
-    background: var(--green);
-    color: #06281c;
-
-    box-shadow:
-    0 10px 20px rgba(110,231,183,.15);
+.toast-success { 
+    background: var(--green); 
+    color: #00331a; 
+    box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2); 
 }
-
-.toast-error {
-    background: var(--red);
-    color: white;
-
-    box-shadow:
-    0 10px 20px rgba(255,92,122,.18);
+        
+.toast-error { 
+    background: var(--red); 
+    color: white; 
+    box-shadow: 0 10px 20px rgba(255, 77, 77, 0.2); 
 }
 
 /* PAGE SYSTEM */

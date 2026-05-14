@@ -34,25 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // === 3. LOGIKA AUTH (SINKRON DENGAN SESSION) ===
+    // Bagian Logika Auth di script.js
     const handleAuth = (e, formId) => {
         e.preventDefault();
         const form = document.getElementById(formId);
         const formData = new FormData(form);
         
+        // Ubah FormData menjadi Object JSON
+        const data = Object.fromEntries(formData.entries());
+        
         const actionType = (formId === 'loginForm') ? 'login' : 'register';
-        formData.append('action', actionType);
-
-        fetch('auth.php', { 
-            method: 'POST', 
-            body: formData,
-            credentials: 'include' 
+        const endpoint = `http://localhost:3000/api/${actionType}`;
+    
+        fetch(endpoint, {   
+            method: 'POST',   
+            headers: {
+                'Content-Type': 'application/json' // Beritahu Express ini JSON
+            },
+            body: JSON.stringify(data), // Kirim sebagai string JSON
+            credentials: 'include'   
         })
-        .then(async (res) => {
-        const text = await res.text();
-        console.log(text);
-
-        return JSON.parse(text);
-    })
+        .then(res => res.json())
         .then(res => {
             console.log(res);
             if(res.status === 'success') {
