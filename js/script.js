@@ -16,10 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(status => {
         if (!status.loggedIn) {
+            // Jika belum login, langsung lempar ke halaman login
             window.location.href = "/auth"; 
             return;
         }
         
+        // Jika sudah login, baru jalankan fungsi load konten
         loadMainContent();
     })
     .catch(err => {
@@ -28,6 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/* ==============================  
+   FUNGSI UTAMA LOAD KONTEN
+============================== */
 function loadMainContent() {
     // 1. LOAD DATA NOVEL
     fetch(`${API_BASE}/api/novels`, {
@@ -63,7 +68,6 @@ function loadMainContent() {
     // 4. SETUP EVENT LISTENERS
     setupEventListeners();
 }
-});
 
 /* ==============================  
    FUNGSI AUTH & EVENT SETUP
@@ -194,14 +198,12 @@ function initNotificationSystem() {
     })
     .then(res => res.json())
     .then(data => {
-        // Update Badge
         if (data.notification) {
             notificationBtn?.classList.add("has-notif");
             if (notifBadge) notifBadge.style.display = "block";
             notificationBtn.onclick = () => openNotificationSPA();
         }
 
-        // Render List Notifikasi
         allNotifications = data.notifications || [];
         if (listEl) {
             listEl.innerHTML = allNotifications.length 
