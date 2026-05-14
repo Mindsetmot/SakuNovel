@@ -1,7 +1,7 @@
 /* ==============================  
    KONFIGURASI & STATE UTAMA
 ============================== */
-const API_BASE = "https://core-logic.floverse.my.id";
+const API_BASE = "";
 let novelDB = [];
 let lastPageId = "beranda";
 let allNotifications = [];
@@ -11,7 +11,25 @@ let readCache = JSON.parse(localStorage.getItem('read_cache') || '[]');
    INISIALISASI APLIKASI (ON LOAD)
 ============================== */
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. LOAD DATA NOVEL (Utama)
+    // --- AUTH GUARD: CEK LOGIN DULU ---
+    fetch(`${API_BASE}/api/status`, { credentials: 'include' })
+    .then(res => res.json())
+    .then(status => {
+        if (!status.loggedIn) {
+            window.location.href = "/auth"; 
+            return;
+        }
+        
+        loadMainContent();
+    })
+    .catch(err => {
+        console.error("Auth check failed:", err);
+        window.location.href = "/auth";
+    });
+});
+
+function loadMainContent() {
+    // 1. LOAD DATA NOVEL
     fetch(`${API_BASE}/api/novels`, {
         credentials: 'include',
         headers: { "Content-Type": "application/json" }
@@ -19,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(data => {
         novelDB = data;
-        generateCategoryChips(data); // Buat filter genre
-        render(novelDB);             // Render grid utama
-        renderGrid(data);            // Render grid rekomendasi
+        generateCategoryChips(data);
+        render(novelDB);
+        renderGrid(data);
     })
     .catch(err => console.error("Gagal load novel:", err));
 
@@ -44,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 4. SETUP EVENT LISTENERS
     setupEventListeners();
+}
 });
 
 /* ==============================  

@@ -29,7 +29,7 @@
     }
   }
 
-  fetch(`https://core-logic.floverse.my.id/api/notification`)
+  fetch(`/api/notification`)
     .then(res => res.json())
     .then(data => {
       const items = data.notifications || [];

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = Object.fromEntries(formData.entries());
         
         const actionType = (formId === 'loginForm') ? 'login' : 'register';
-        const endpoint = `https://core-logic.floverse.my.id/api/${actionType}`;
+        const endpoint = `/api/${actionType}`;
     
         fetch(endpoint, {   
             method: 'POST',   
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('account_id', res.data.account_id);
                     localStorage.setItem('user_role', res.data.role);
                     // Redirect ke halaman utama
-                    setTimeout(() => { window.location.href = `https://www.floverse.my.id`; }, 1500);
+                    setTimeout(() => { window.location.href = `../`; }, 1500);
                 } else {
                     setTimeout(() => { switchPage('login'); }, 1500);
                 }

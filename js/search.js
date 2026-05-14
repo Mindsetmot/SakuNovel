@@ -1,6 +1,6 @@
 let novelDB = [];
 
-const API_BASE = "https://core-logic.floverse.my.id";
+const API_BASE = "";
 
 // ======================================
 // ELEMENT
