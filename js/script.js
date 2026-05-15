@@ -1,7 +1,7 @@
 /* ==============================  
    KONFIGURASI & STATE UTAMA
 ============================== */
-const API_BASE = "";
+const API_BASE = "https://floverse.my.id";
 let novelDB = [];
 let lastPageId = "beranda";
 let allNotifications = [];
